@@ -5,7 +5,7 @@ provider "aws" {
 terraform {
   backend "s3" {
     bucket = "anusha2429-demo"  # Replace with your bucket name
-    key    = "${terraform.workspace}/terraform.tfstate"
+    key    = "dev/terraform.tfstate"        # Use "dev", "staging", "prod"
     region = "us-east-1"
   }
 }
