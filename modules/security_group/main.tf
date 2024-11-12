@@ -4,12 +4,10 @@ module "security_group" {
 
   name        = var.sg_name
   description = var.sg_description
-  vpc_id      = var.vpc_id
-
-  ingress_rules = var.ingress_rules
-  egress_rules  = var.egress_rules
+  vpc_id      = module.vpc.vpc_id
 
   tags = {
     "Environment" = var.environment
   }
 }
+

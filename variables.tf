@@ -18,8 +18,6 @@ variable "public_subnets" { type = list(string) }
 # Security Group variables
 variable "sg_name" { type = string }
 variable "sg_description" { type = string }
-variable "ingress_rules" { type = list(string) }
-variable "egress_rules" { type = list(string) }
 
 # RDS variables
 variable "db_identifier" { type = string }
@@ -28,6 +26,8 @@ variable "db_instance_class" { type = string }
 variable "db_allocated_storage" { type = number }
 variable "db_username" { type = string }
 variable "db_password" { type = string }
+variable "vpc_security_group_ids" { type = list(string) }
+variable "db_subnet_group_name" { type = string }
 
 # EC2 variables
 variable "ami_id" { type = string }

@@ -15,11 +15,11 @@ output "rds_endpoint" {
 }
 
 output "ec2_instance_id" {
-  value = module.ec2.instance_id
+  value = module.ec2.id
 }
 
 output "s3_bucket_name" {
-  value = module.s3.bucket_id
+  value = module.s3.s3_bucket_id
 }
 
 output "eks_cluster_name" {

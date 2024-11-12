@@ -6,7 +6,7 @@ terraform {
   backend "s3" {
     bucket = "anusha2429-demo"  # Replace with your bucket name
     key    = "dev/terraform.tfstate"        # Use "dev", "staging", "prod"
-    region = "us-east-1"
+    region = "ap-south-1"
   }
 }
 
@@ -23,7 +23,6 @@ module "vpc" {
   enable_dns_support   = true
   enable_dns_hostnames = true
   enable_nat_gateway   = true
-  enable_internet_gateway = true
 
   tags = {
     "Environment" = var.environment
@@ -39,9 +38,6 @@ module "security_group" {
   description = var.sg_description
   vpc_id      = module.vpc.vpc_id
 
-  ingress_rules = var.ingress_rules
-  egress_rules  = var.egress_rules
-
   tags = {
     "Environment" = var.environment
   }
@@ -53,14 +49,19 @@ module "rds" {
   version = "6.10.0"
 
   identifier               = var.db_identifier
-  engine                   = var.db_engine
+  engine                   = var.db_engine       # Specify the database engine
   instance_class           = var.db_instance_class
   allocated_storage        = var.db_allocated_storage
   username                 = var.db_username
   password                 = var.db_password
-  vpc_security_group_ids   = [module.security_group.security_group_id]
-  db_subnet_group_name     = module.vpc.database_subnet_group_name
+  vpc_security_group_ids   = var.vpc_security_group_ids
+  db_subnet_group_name     = var.db_subnet_group_name
   publicly_accessible      = false
+ 
+
+ # Explicitly disable custom option and parameter groups
+  create_db_option_group    = false
+  create_db_parameter_group = false
 
   tags = {
     "Environment" = var.environment
@@ -90,7 +91,6 @@ module "s3" {
   version = "4.2.1"
 
   bucket = "${terraform.workspace}-app-bucket"
-  acl    = "private"
 
   tags = {
     "Environment" = var.environment
