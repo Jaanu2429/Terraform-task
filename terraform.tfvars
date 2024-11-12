@@ -1,8 +1,3 @@
-region = "ap-south-1"
-<<<<<<< HEAD
-environment = "dev"
-=======
->>>>>>> 172d41c (Updated Terraform configurations and variables)
 vpc_name = "my-vpc"
 vpc_cidr = "10.0.0.0/16"
 azs = ["ap-south-1a"]
